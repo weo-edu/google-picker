@@ -19,5 +19,6 @@
   "bugs": {
     "url": "https://github.com/weo-edu/google-picker/issues"
   },
-  "homepage": "https://github.com/weo-edu/google-picker"
+  "homepage": "https://github.com/weo-edu/google-picker",
+  "dependencies": {}
 }

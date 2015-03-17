@@ -3,26 +3,30 @@ module.exports = function picker(baseOpts) {
   gapi.load('picker');
   gapi.load('auth');
 
-  baseOpts.origin = baseOpts.origin || window.location.protocol + '//' + window.location.host;
+  baseOpts.scope = baseOpts.scope || ['https://www.googleapis.com/auth/drive'];
+  baseOpts.origin = baseOpts.origin || (window.location.protocol + '//' + window.location.host);
+  baseOpts.locale = baseOpts.locale || 'en';
 
   return function pick(opts, cb) {
+    if(arguments.length === 1) {
+      cb = opts;
+      opts = {};
+    }
+
     opts = opts || {};
     Object.keys(baseOpts).forEach(function(key) {
       if(! opts.hasOwnProperty(key))
         opts[key] = baseOpts[key];
     });
 
-    var accessToken;
-
     gapi.load('picker');
     gapi.load('auth', {
       callback: function() {
         var result = gapi.auth.getToken();
-
         if(result) handleAuth(result);
         else {
           gapi.auth.authorize({
-            clientId: opts.clientId,
+            client_id: opts.clientId,
             scope: opts.scope,
             immediate: false
           }, handleAuth);
@@ -36,11 +40,16 @@ module.exports = function picker(baseOpts) {
       openPicker(result.access_token);
     }
 
-    function openPicker(token, cb) {
+    function openPicker(token) {
       var picker = new google.picker.PickerBuilder()
         .setLocale(opts.locale)
         .setDeveloperKey(opts.apiKey)
-        .setCalllback(cb)
+        .setOAuthToken(token)
+        .setCallback(function(data) {
+          if(data.action === google.picker.Action.PICKED) {
+            cb(null, data.docs);
+          }
+        })
         .setOrigin(opts.origin);
 
       if(opts.features && opts.features.length > 0) {
@@ -50,18 +59,13 @@ module.exports = function picker(baseOpts) {
       }
 
       if(opts.views && opts.views.length > 0) {
-        opts.views.forEach(function(view) {
-          picker.addView(eval('new google.picker.' + view));
+        opts.views.forEach(function(viewStr) {
+          var view  = eval('new google.picker.' + viewStr);
+          picker.addView(view);
         });
       }
 
       picker.build().setVisible(true);
-    }
-
-    function pickerResponse(data) {
-      if(data.action === google.picker.Action.PICKED) {
-        cb(null, data.docs);
-      }
     }
   };
 };
