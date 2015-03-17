@@ -1,6 +1,6 @@
 {
   "name": "google-picker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple google picker package.",
   "main": "index.js",
   "scripts": {
