@@ -43,7 +43,7 @@ module.exports = function picker(baseOpts) {
     function openPicker(token) {
       var picker = new google.picker.PickerBuilder()
         .setLocale(opts.locale)
-        .setDeveloperKey(opts.apiKey)
+        // .setDeveloperKey(opts.apiKey)
         .setOAuthToken(token)
         .setCallback(function(data) {
           if(data.action === google.picker.Action.PICKED) {
