@@ -47,7 +47,7 @@ module.exports = function picker(baseOpts) {
         .setOAuthToken(token)
         .setCallback(function(data) {
           if(data.action === google.picker.Action.PICKED) {
-            cb(null, data.doc, token);
+            cb(null, data.docs, token);
           }
         })
         .setOrigin(opts.origin);
