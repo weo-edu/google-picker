@@ -28,7 +28,8 @@ module.exports = function picker(baseOpts) {
           gapi.auth.authorize({
             client_id: opts.clientId,
             scope: opts.scope,
-            immediate: false
+            immediate: false,
+            authuser: ''
           }, handleAuth);
         // }
       }
