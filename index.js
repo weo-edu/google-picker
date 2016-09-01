@@ -67,6 +67,7 @@ module.exports = function picker(baseOpts) {
       }
 
       picker.build().setVisible(true);
+      gapi.auth.setToken(null);
     }
   };
 };
