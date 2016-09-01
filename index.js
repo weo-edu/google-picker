@@ -22,15 +22,15 @@ module.exports = function picker(baseOpts) {
     gapi.load('picker');
     gapi.load('auth', {
       callback: function() {
-        var result = gapi.auth.getToken();
-        if(result) handleAuth(result);
-        else {
+        // var result = gapi.auth.getToken();
+        // if(result) handleAuth(result);
+        // else {
           gapi.auth.authorize({
             client_id: opts.clientId,
             scope: opts.scope,
             immediate: false
           }, handleAuth);
-        }
+        // }
       }
     });
 
