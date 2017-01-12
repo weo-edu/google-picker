@@ -51,20 +51,8 @@ module.exports = function picker(baseOpts) {
             cb(null, data.docs, token);
           }
         })
-        .setOrigin(opts.origin);
-
-      if(opts.features && opts.features.length > 0) {
-        opts.features.forEach(function(feature) {
-          picker.enableFeature(google.picker.Feature[feature]);
-        });
-      }
-
-      if(opts.views && opts.views.length > 0) {
-        opts.views.forEach(function(viewStr) {
-          var view  = eval('new google.picker.' + viewStr);
-          picker.addView(view);
-        });
-      }
+        .setOrigin(opts.origin)
+        .addViewGroup( new google.picker.DocsView().setParent('root').setIncludeFolders(true));
 
       picker.build().setVisible(true);
       gapi.auth.setToken(null);
