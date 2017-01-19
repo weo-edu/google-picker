@@ -1,28 +1,16 @@
 # google-picker
 
-Dead simple google picker library.
+[![Travis][build-badge]][build]
+[![npm package][npm-badge]][npm]
+[![Coveralls][coveralls-badge]][coveralls]
 
-## Usage
+Describe google-picker here.
 
-```javascript
-var pick = require('google-picker')({
-  clientId: <your client id>,
-  apiKey: <your developer api key>
-});
+[build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
+[build]: https://travis-ci.org/user/repo
 
-pick({views: ['DocsView()']}, function(err, files) {
-  if(err) throw err;
-  // files
-});
-```
+[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
+[npm]: https://www.npmjs.org/package/npm-package
 
-## Config
-
-* `clientId` your application's client id
-* `apiKey` your developer key
-* `scope` authorization scope.  defaults to 'https://www.googleapis.com/auth/drive' (full access to google drive)
-* `origin` the origin of your application.  Defaults to window.location.protocol + '//' + window.location.host
-* `locale` defaults to 'en' (english)
-* `views` refer to https://developers.google.com/picker/docs/reference
-* `features` refer to https://developers.google.com/picker/docs/reference
-
+[coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
+[coveralls]: https://coveralls.io/github/user/repo

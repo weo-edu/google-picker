@@ -28,7 +28,8 @@ module.exports = function picker(baseOpts) {
           gapi.auth.authorize({
             client_id: opts.clientId,
             scope: opts.scope,
-            immediate: false
+            immediate: false,
+            authuser: ''
           }, handleAuth);
         }
       }
@@ -47,25 +48,15 @@ module.exports = function picker(baseOpts) {
         .setOAuthToken(token)
         .setCallback(function(data) {
           if(data.action === google.picker.Action.PICKED) {
-            cb(null, data.docs);
+            cb(null, data.docs, token);
           }
         })
-        .setOrigin(opts.origin);
-
-      if(opts.features && opts.features.length > 0) {
-        opts.features.forEach(function(feature) {
-          picker.enableFeature(google.picker.Feature[feature]);
-        });
-      }
-
-      if(opts.views && opts.views.length > 0) {
-        opts.views.forEach(function(viewStr) {
-          var view  = eval('new google.picker.' + viewStr);
-          picker.addView(view);
-        });
-      }
+        .setOrigin(opts.origin)
+        .addViewGroup( new google.picker.DocsView().setParent('root').setIncludeFolders(true))
+      	.addViewGroup( new google.picker.DocsView().setOwnedByMe(false).setIncludeFolders(true))
 
       picker.build().setVisible(true);
+      gapi.auth.setToken(null);
     }
   };
 };
