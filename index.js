@@ -52,8 +52,7 @@ module.exports = function picker(baseOpts) {
           }
         })
         .setOrigin(opts.origin)
-        .addViewGroup( new google.picker.DocsView().setParent('root').setIncludeFolders(true))
-        .addViewGroup(new google.picker.DocsView().setOwnedByMe(true));
+        .addViewGroup( new google.picker.DocsView().setIncludeFolders(true))
 
       picker.build().setVisible(true);
       gapi.auth.setToken(null);
